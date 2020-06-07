@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+
+  techlog:
+    build: .
+    image: "techlog"
+    hostname: techlog
+    restart: always
+    container_name: "techlog"
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    command: ["/start.sh"]
+    ports:
+      - "8888:80"
+    networks:
+      mynetwork:
+        aliases:
+          - techlog
+    volumes:
+      - "/mnt/mypath:/mnt/techlog"
+      - "./data:/var/www/html"
+networks:
+  mynetwork:
+    external:
+     name: mynetwork
